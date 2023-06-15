@@ -1,0 +1,25 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "TestApplication",
+            "request": "launch",
+            "mainClass": "com.mycompany.test2.TestApplication",
+            "projectName": "test2",
+            "vmArgs": "-Xmx256M -XX:+UseSerialGC"
+            // https://medium.com/swlh/jvm-startup-time-and-memory-footprint-enhancements-6b78bd74f182
+            // "vmArgs": "-Xmx512M -XX:+UseSerialGC -XX:DumpLoadedClassList=app-classes.txt"
+            // "vmArgs": "-Xmx512M -Xshare:dump -XX:SharedClassListFile=app-classes.txt -XX:SharedArchiveFile=app-classes.jsa"
+        }
+    ]
+}
