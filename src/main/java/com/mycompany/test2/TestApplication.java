@@ -19,6 +19,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
+
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.security.SecuritySchemes;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
@@ -33,7 +36,6 @@ import org.springframework.cache.annotation.EnableCaching;
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @EnableAsync
 @EnableScheduling
-// @EnableIntegration
 @EnableJpaAuditing
 @EnableCaching
 @SecuritySchemes({
@@ -67,7 +69,9 @@ public class TestApplication {
 
     @Bean
     @Profile("!jpa-test")
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector)
+            throws Exception {
+        MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector).servletPath("/");
         http.authorizeHttpRequests(requests -> requests
                 // .requestMatchers("/swagger-ui.html", "/swagger-ui/**",
                 // "/v3/api-docs/**").permitAll()
@@ -76,7 +80,7 @@ public class TestApplication {
                 // .requestMatchers("/api/v1/subscriptions").hasRole("ADMIN")
                 // .requestMatchers("/api").authenticated()
                 // .requestMatchers("/api").permitAll()
-                .requestMatchers("/admin").hasRole("ADMIN")
+                .requestMatchers(mvcMatcherBuilder.pattern("/admin/**")).hasRole("ADMIN")
                 .anyRequest().permitAll());
         http.formLogin(form -> form.permitAll());
         http.logout(logout -> logout.permitAll());
