@@ -17,7 +17,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.0</version>
+        <version>3.1.2</version>
     </parent>
 
     <!-- Add typical dependencies for a web application -->
@@ -76,13 +76,13 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.26</version>
+            <version>1.18.28</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-jpamodelgen</artifactId>
-            <version>6.2.3.Final</version>
+            <version>6.2.7.Final</version>
         </dependency>
         <!-- <dependency>
             <groupId>org.hibernate</groupId>
@@ -157,7 +157,7 @@
         <dependency>
             <groupId>com.ibm.icu</groupId>
             <artifactId>icu4j</artifactId>
-            <version>73.1</version>
+            <version>73.2</version>
         </dependency>
 
         <dependency>
