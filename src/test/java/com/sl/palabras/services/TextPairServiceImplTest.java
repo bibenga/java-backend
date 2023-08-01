@@ -12,6 +12,7 @@ import com.mycompany.test2.TestApplication;
 import com.sl.palabras.entities.TextPair;
 import com.sl.palabras.entities.User;
 import com.sl.palabras.repositories.TextPairRepository;
+import com.sl.palabras.services.exceptions.UserNotFoundException;
 
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
@@ -45,7 +46,7 @@ public class TextPairServiceImplTest {
     }
 
     @Test
-    void testLoadPairs() {
+    void testLoadPairs() throws UserNotFoundException {
         assertEquals(textPairRepository.count(), 1);
         textPairService.loadPairs("", "a", true);
         assertEquals(textPairRepository.count(), 0);
