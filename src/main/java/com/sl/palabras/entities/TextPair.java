@@ -51,11 +51,11 @@ public class TextPair implements Serializable {
     @NotNull
     private String text2;
 
-    @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Column(name = "created_ts", nullable = false, updatable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @CreationTimestamp
     private ZonedDateTime created;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Column(name = "modified_ts", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @UpdateTimestamp
     private ZonedDateTime modified;
 }

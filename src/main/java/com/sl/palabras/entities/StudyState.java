@@ -3,6 +3,7 @@ package com.sl.palabras.entities;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -55,17 +56,19 @@ public class StudyState implements Serializable {
     @NotNull
     private TextPair textPair;
 
-    @Column(nullable = false)
-    private boolean is_passed_flg;
+    @Column(name = "is_passed_flg", nullable = false)
+    @ColumnDefault("false")
+    private boolean passed;
 
-    @Column(nullable = false)
-    private boolean is_skipped_flg;
+    @Column(name = "is_skipped_flg", nullable = false)
+    @ColumnDefault("false")
+    private boolean skipped;
 
-    @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Column(name = "created_ts", nullable = false, updatable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @CreationTimestamp
     private ZonedDateTime created;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Column(name = "modified_ts", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @UpdateTimestamp
     private ZonedDateTime modified;
 }

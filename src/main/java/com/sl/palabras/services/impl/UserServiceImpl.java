@@ -4,6 +4,8 @@ import com.sl.palabras.entities.User;
 import com.sl.palabras.repositories.UserRepository;
 import com.sl.palabras.services.UserService;
 
+import jakarta.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,16 @@ import lombok.extern.log4j.Log4j2;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @PostConstruct
+    @Transactional(readOnly = false)
+    public void init() {
+        var user = userRepository.findOneByUsername("a");
+        if (user == null) {
+            log.warn("Demo user crated");
+            userRepository.save(User.builder().setUsername("a").build());
+        }
+    }
 
     @Override
     public User findOneByUsername(String username) {

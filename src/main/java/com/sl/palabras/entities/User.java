@@ -3,6 +3,7 @@ package com.sl.palabras.entities;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -43,11 +44,18 @@ public class User implements Serializable {
     @NotNull
     private String username;
 
-    @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Column
+    private String password;
+
+    @Column(name = "is_enabled_flg")
+    @ColumnDefault("true")
+    private boolean enabled;
+
+    @Column(name = "created_ts", nullable = false, updatable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @CreationTimestamp
     private ZonedDateTime created;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Column(name = "modified_ts", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @UpdateTimestamp
     private ZonedDateTime modified;
 }
