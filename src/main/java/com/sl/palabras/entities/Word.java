@@ -2,14 +2,11 @@ package com.sl.palabras.entities;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.type.SqlTypes;
 
 import jakarta.persistence.Cacheable;
 import jakarta.persistence.CascadeType;
@@ -36,30 +33,27 @@ import lombok.NoArgsConstructor;
 @DynamicInsert
 @DynamicUpdate
 @Cacheable
-public class TextPair implements Serializable {
+public class Word implements Serializable {
     @Id
     @GeneratedValue
     @Column
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_text_pair_user"))
+    @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_word_text_pair"))
     @NotNull
-    private User user;
+    private TextPair textPair;
 
-    @Column(nullable = false)
+    private Long position;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_word_language"))
     @NotNull
-    private String test1;
+    private Language language;
 
-    @Column(nullable = false)
+    @Column(name="text0", nullable = false)
     @NotNull
-    private String text2;
-
-    @JdbcTypeCode(SqlTypes.JSON)
-    private List<String> test1a;
-
-    @JdbcTypeCode(SqlTypes.JSON)
-    private List<String> test2a;
+    private String text;
 
     @Column(name = "created_ts", nullable = false, updatable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @CreationTimestamp

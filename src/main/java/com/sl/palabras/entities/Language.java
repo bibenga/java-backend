@@ -2,25 +2,19 @@ package com.sl.palabras.entities;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.type.SqlTypes;
 
 import jakarta.persistence.Cacheable;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -33,33 +27,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Builder(setterPrefix = "set", toBuilder = true)
 @Entity
+@Table(uniqueConstraints = {
+        @UniqueConstraint(name = "u_language_code", columnNames = { "code" }),
+})
 @DynamicInsert
 @DynamicUpdate
 @Cacheable
-public class TextPair implements Serializable {
+public class Language implements Serializable {
     @Id
-    @GeneratedValue
-    @Column
-    private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_text_pair_user"))
-    @NotNull
-    private User user;
+    private Byte id;
 
     @Column(nullable = false)
     @NotNull
-    private String test1;
+    private String code;
 
     @Column(nullable = false)
     @NotNull
-    private String text2;
-
-    @JdbcTypeCode(SqlTypes.JSON)
-    private List<String> test1a;
-
-    @JdbcTypeCode(SqlTypes.JSON)
-    private List<String> test2a;
+    private String name;
 
     @Column(name = "created_ts", nullable = false, updatable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @CreationTimestamp
