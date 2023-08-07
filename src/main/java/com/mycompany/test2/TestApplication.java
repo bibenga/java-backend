@@ -25,8 +25,11 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
+import com.sl.palabras.services.LanguageService;
+
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.security.SecuritySchemes;
+import lombok.extern.log4j.Log4j2;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 
@@ -49,11 +52,15 @@ import org.springframework.cache.annotation.EnableCaching;
         @SecurityScheme(name = "basic", type = SecuritySchemeType.HTTP, scheme = "basic"),
         @SecurityScheme(name = "token", type = SecuritySchemeType.APIKEY, in = SecuritySchemeIn.HEADER, paramName = "X-Token", scheme = "token"),
 })
+@Log4j2
 // @EnableAdminServer
 public class TestApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TestApplication.class, args);
+        var context = SpringApplication.run(TestApplication.class, args);
+        log.info("inject data");
+        var languageService = context.getBean(LanguageService.class);
+        languageService.addDefaultLanguages();
     }
 
     // @Bean
