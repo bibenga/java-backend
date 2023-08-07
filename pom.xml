@@ -119,12 +119,11 @@
             <artifactId>springdoc-openapi-security</artifactId>
             <version>1.7.0</version>
         </dependency>
-        <dependency>
-            <!-- for log4j async logger -->
+        <!-- <dependency>
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
             <version>3.4.4</version>
-        </dependency>
+        </dependency> -->
 
         <!-- <dependency>
             <groupId>de.codecentric</groupId>
