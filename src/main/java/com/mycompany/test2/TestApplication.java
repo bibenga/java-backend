@@ -1,5 +1,6 @@
 package com.mycompany.test2;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -7,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -59,8 +61,12 @@ public class TestApplication {
     public static void main(String[] args) {
         var context = SpringApplication.run(TestApplication.class, args);
         log.info("inject data");
-        var languageService = context.getBean(LanguageService.class);
-        languageService.addDefaultLanguages();
+
+        var addDefaultDatas = context.getEnvironment().getProperty("com.sl.palabras.add-default-datas", boolean.class);
+        if (addDefaultDatas == Boolean.TRUE) {
+            var languageService = context.getBean(LanguageService.class);
+            languageService.addDefaultLanguages();
+        }
     }
 
     // @Bean
