@@ -22,6 +22,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
@@ -45,6 +46,7 @@ public class User implements Serializable {
     private String username;
 
     @Column
+    @ToString.Exclude
     private String password;
 
     @Column(name = "is_enabled_flg")

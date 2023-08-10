@@ -4,8 +4,6 @@ import com.sl.palabras.entities.User;
 import com.sl.palabras.repositories.UserRepository;
 import com.sl.palabras.services.UserService;
 
-import jakarta.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +17,14 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @PostConstruct
+    @Override
     @Transactional(readOnly = false)
-    public void init() {
+    public void addDefaultUsers() {
         var user = userRepository.findOneByUsername("a");
         if (user == null) {
-            log.warn("Demo user crated");
-            userRepository.save(User.builder().setUsername("a").build());
+            create("a", "a");
+        } else {
+            log.info("User '{}' exists: {}", user.getUsername(), user);
         }
     }
 
@@ -33,7 +32,7 @@ public class UserServiceImpl implements UserService {
     public User findOneByUsername(String username) {
         var user = userRepository.findOneByUsername(username.toLowerCase());
         if (user == null) {
-            
+
         }
         log.info("User '{}' loaded: {}", username, user);
         return user;
@@ -41,8 +40,11 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = false)
     @Override
-    public User create(String username) {
-        var user = User.builder().setUsername(username.toLowerCase()).build();
+    public User create(String username, final String password) {
+        var user = User.builder()
+                .setUsername(username.toLowerCase())
+                .setPassword(password) // muy seguro 🤣
+                .build();
         userRepository.save(user);
         userRepository.flush();
         log.info("User '{}' created: {}", username, user);
@@ -57,7 +59,10 @@ public class UserServiceImpl implements UserService {
         log.info("try to login: username='{}', password='{}'", username, password);
         var user = userRepository.findOneByUsername(username.toLowerCase());
         if (user == null) {
-            
+        }
+        if (user.getPassword() == null) {
+        }
+        if (user.getPassword() != password) { // es seguro tambian 🤣
         }
         // check password
         log.info("User '{}' loaded: {}", username, user);

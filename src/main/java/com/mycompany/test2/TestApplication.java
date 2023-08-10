@@ -26,6 +26,7 @@ import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import com.sl.palabras.services.LanguageService;
+import com.sl.palabras.services.UserService;
 
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.security.SecuritySchemes;
@@ -64,6 +65,9 @@ public class TestApplication {
         if (addDefaultDatas == Boolean.TRUE) {
             var languageService = context.getBean(LanguageService.class);
             languageService.addDefaultLanguages();
+
+            var userService = context.getBean(UserService.class);
+            userService.addDefaultUsers();
         }
     }
 
