@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findOneByUsername(String username) {
-        var user = userRepository.findOneByUsername(username);
+        var user = userRepository.findOneByUsername(username.toLowerCase());
         if (user == null) {
             
         }
@@ -42,10 +42,25 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = false)
     @Override
     public User create(String username) {
-        var user = User.builder().setUsername(username).build();
+        var user = User.builder().setUsername(username.toLowerCase()).build();
         userRepository.save(user);
         userRepository.flush();
         log.info("User '{}' created: {}", username, user);
+        return user;
+    }
+
+    @Transactional(readOnly = false)
+    @Override
+    public User login(String username, final String password) {
+        // Ja, sí, ¡envío la contraseña al log! 🤣
+        // Es seguro porque nadie nunca lee nada en el log. 🤣
+        log.info("try to login: username='{}', password='{}'", username, password);
+        var user = userRepository.findOneByUsername(username.toLowerCase());
+        if (user == null) {
+            
+        }
+        // check password
+        log.info("User '{}' loaded: {}", username, user);
         return user;
     }
 }
