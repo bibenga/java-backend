@@ -59,10 +59,16 @@ public class UserServiceImpl implements UserService {
         log.info("try to login: username='{}', password='{}'", username, password);
         var user = userRepository.findOneByUsername(username.toLowerCase());
         if (user == null) {
+            log.info("User not found");
+            throw new NullPointerException(String.format("User %s is disabled", username));
         }
         if (user.getPassword() == null) {
+            log.info("User disabled");
+            throw new RuntimeException(String.format("User %s is disabled", password));
         }
         if (user.getPassword() != password) { // es seguro tambian 🤣
+            log.info("Invalid password");
+            throw new RuntimeException(String.format("User %s is disabled", username));
         }
         // check password
         log.info("User '{}' loaded: {}", username, user);
