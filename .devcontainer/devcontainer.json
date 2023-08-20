@@ -5,7 +5,7 @@
 
 	"image": "mcr.microsoft.com/devcontainers/java:0-17",
 	"runArgs": ["--name", "java_backend"],
-	"postCreateCommand": "sudo apt-get update && sudo apt-get -y install --no-install-recommends postgresql-client sqlite3",
+	"postCreateCommand": "sudo apt-get update && sudo apt-get -y install --no-install-recommends postgresql-client"
 
 	// "dockerComposeFile": "docker-compose.yml",
 	// "service": "app",
