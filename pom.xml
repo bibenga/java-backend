@@ -82,9 +82,8 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-jpamodelgen</artifactId>
-            <version>6.2.7.Final</version>
+            <version>6.2.8.Final</version>
         </dependency>
-
         <!-- <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
