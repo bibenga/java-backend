@@ -2,6 +2,7 @@ package com.github.bibenga.palabras.api.controllers;
 
 import java.io.Serializable;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,8 +18,10 @@ public class LanguageDTO implements Serializable {
     private int id;
 
     @NotNull
+    @NotBlank
     private String code;
 
     @NotNull
+    @NotBlank
     private String name;
 }
