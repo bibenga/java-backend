@@ -9,28 +9,22 @@
             "name": "WebApiApplication",
             "request": "launch",
             "mainClass": "com.github.bibenga.palabras.api.WebApiApplication",
-            "projectName": "api"
+            "projectName": "api",
+            "vmArgs": "-Xmx256M -XX:+UseSerialGC"
         },
         {
             "type": "java",
             "name": "LoadDataApplication",
             "request": "launch",
             "mainClass": "com.github.bibenga.palabras.loader.LoadDataApplication",
-            "projectName": "loader"
+            "projectName": "loader",
+            "vmArgs": "-Xmx256M -XX:+UseSerialGC"
         },
         {
             "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "TestApplication",
-            "request": "launch",
-            "mainClass": "com.mycompany.test2.TestApplication",
-            "projectName": "test2",
-            "vmArgs": "-Xmx256M -XX:+UseSerialGC"
         }
     ]
 }
