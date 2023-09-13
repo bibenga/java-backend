@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootConfiguration
+// @Configuration
 @EntityScan({ "com.github.bibenga.palabras.entities" })
 @EnableJpaRepositories(basePackages = { "com.github.bibenga.palabras.repositories" })
 @EnableJpaAuditing

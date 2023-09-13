@@ -5,15 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
 import com.github.bibenga.palabras.entities.Language;
 
-
-// @SpringBootTest(classes = TestConfiguration.class)
 @DataJpaTest(showSql = false)
-// @Import(TestConfiguration.class)
-@TestPropertySource(locations = {"classpath:application-test.properties"})
+// @ContextConfiguration(classes=TestConfiguration.class)
+@TestPropertySource(locations = { "classpath:application-test.properties" })
 public class LanguageRepositoryTest {
 
     @Autowired
