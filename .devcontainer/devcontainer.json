@@ -5,14 +5,20 @@
 
 	"image": "mcr.microsoft.com/devcontainers/java:17",
 	"runArgs": ["--name", "java_backend"],
-	"postCreateCommand": "sudo apt-get update && sudo apt-get -y install --no-install-recommends postgresql-client"
+	"postCreateCommand": "sudo apt-get update && sudo apt-get -y install --no-install-recommends postgresql-client",
 
 	// "dockerComposeFile": "docker-compose.yml",
 	// "service": "app",
 	// "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}"
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {}
+	"features": {
+		"ghcr.io/devcontainers/features/java:1": {
+			"version": "none",
+			"installGradle": "false",
+			"installMaven": "true"
+		}
+	}
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// This can be used to network with other containers or with the host.
