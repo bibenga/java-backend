@@ -47,23 +47,11 @@ import org.springframework.cache.annotation.EnableCaching;
         @SecurityScheme(name = "basic", type = SecuritySchemeType.HTTP, scheme = "basic"),
         @SecurityScheme(name = "token", type = SecuritySchemeType.APIKEY, in = SecuritySchemeIn.HEADER, paramName = "X-Token", scheme = "token"),
 })
-// @EnableAdminServer
 public class WebApiApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(WebApiApplication.class, args);
     }
-
-    // @Bean
-    // public CommonsRequestLoggingFilter logFilter() {
-    // var filter = new CommonsRequestLoggingFilter();
-    // filter.setIncludeClientInfo(true);
-    // filter.setIncludeQueryString(true);
-    // filter.setIncludeHeaders(true);
-    // filter.setIncludePayload(true);
-    // filter.setMaxPayloadLength(10000);
-    // return filter;
-    // }
 
     // @Bean
     // public Executor getAsyncExecutor() {
