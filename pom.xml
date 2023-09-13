@@ -27,6 +27,7 @@
     <modules> 
         <module>db</module>
         <module>services</module>
+        <module>loader</module>
         <module>api</module>
     </modules>
 
