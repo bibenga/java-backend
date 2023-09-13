@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "WebApiApplication",
+            "request": "launch",
+            "mainClass": "com.github.bibenga.palabras.api.WebApiApplication",
+            "projectName": "api"
+        },
+        {
+            "type": "java",
             "name": "LoadDataApplication",
             "request": "launch",
             "mainClass": "com.github.bibenga.palabras.loader.LoadDataApplication",

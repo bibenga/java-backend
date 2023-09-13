@@ -11,9 +11,9 @@ import com.github.bibenga.palabras.loader.services.LanguageService;
 import lombok.extern.log4j.Log4j2;
 
 @SpringBootApplication
-@ComponentScan({ "com.github.bibenga.palabras.loader.services.impl" })
 @EntityScan({ "com.github.bibenga.palabras.entities" })
 @EnableJpaRepositories(basePackages = { "com.github.bibenga.palabras.repositories" })
+@ComponentScan({ "com.github.bibenga.palabras.loader.services.impl" })
 @EnableJpaAuditing
 @Log4j2
 public class LoadDataApplication {

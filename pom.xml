@@ -146,12 +146,6 @@
         </dependency> -->
 
         <!-- <dependency>
-            <groupId>com.giffing.wicket.spring.boot.starter</groupId>
-            <artifactId>wicket-spring-boot-starter</artifactId>
-            <version></version>
-        </dependency> -->
-
-        <!-- <dependency>
             <groupId>com.ibm.icu</groupId>
             <artifactId>icu4j</artifactId>
             <version>73.2</version>
