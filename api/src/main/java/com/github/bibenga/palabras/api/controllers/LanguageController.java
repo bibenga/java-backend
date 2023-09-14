@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.bibenga.palabras.entities.Language;
 import com.github.bibenga.palabras.repositories.LanguageRepository;
 
 import lombok.extern.log4j.Log4j2;
@@ -35,8 +35,7 @@ public class LanguageController {
     private LanguageRepository languageRepository;
 
     @ExceptionHandler(LanguageNotFoundException.class)
-    @ResponseStatus(code = HttpStatus.NOT_FOUND)
-    public ResponseEntity<ProblemDetail> problem(final Throwable e, Principal principal) {
+    public ResponseEntity<ProblemDetail> handleError(final Throwable e, Principal principal) {
         var detail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -49,11 +48,7 @@ public class LanguageController {
         var dbLangs = languageRepository.findAll();
         var respLangs = new ArrayList<LanguageDTO>(dbLangs.size());
         for (var dbLang : dbLangs) {
-            respLangs.add(LanguageDTO.builder()
-                    .setId(dbLang.getId())
-                    .setCode(dbLang.getCode())
-                    .setName(dbLang.getName())
-                    .build());
+            respLangs.add(convertLangToDto(dbLang));
         }
         log.info("find {} langs: {}", respLangs.size(), respLangs);
         return new PageImpl<>(respLangs);
@@ -68,12 +63,16 @@ public class LanguageController {
             log.info("a language with id {} is not found", id);
             throw new LanguageNotFoundException(id);
         }
-        var respLang = LanguageDTO.builder()
-                .setId(dbLang.get().getId())
-                .setCode(dbLang.get().getCode())
-                .setName(dbLang.get().getName())
-                .build();
+        var respLang = convertLangToDto(dbLang.get());
         log.info("the language with id {} is: {}", id, respLang);
         return respLang;
+    }
+
+    private static final LanguageDTO convertLangToDto(Language lang) {
+        return LanguageDTO.builder()
+                .setId(lang.getId())
+                .setCode(lang.getCode())
+                .setName(lang.getName())
+                .build();
     }
 }
