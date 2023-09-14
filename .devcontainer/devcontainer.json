@@ -4,7 +4,7 @@
 	"name": "Java & PostgreSQL",
 
 	"image": "mcr.microsoft.com/devcontainers/java:17",
-	"runArgs": ["--name", "java_backend"],
+	"runArgs": ["--name", "palabras-java"],
 	"postCreateCommand": "sudo apt-get update && sudo apt-get -y install --no-install-recommends postgresql-client",
 
 	// "dockerComposeFile": "docker-compose.yml",
