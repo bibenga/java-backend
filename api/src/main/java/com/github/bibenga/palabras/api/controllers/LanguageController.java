@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.bibenga.palabras.entities.Language;
 import com.github.bibenga.palabras.repositories.LanguageRepository;
 
 import lombok.extern.log4j.Log4j2;
@@ -48,7 +47,7 @@ public class LanguageController {
         var dbLangs = languageRepository.findAll();
         var respLangs = new ArrayList<LanguageDTO>(dbLangs.size());
         for (var dbLang : dbLangs) {
-            respLangs.add(convertLangToDto(dbLang));
+            respLangs.add(new LanguageDTO(dbLang));
         }
         log.info("find {} langs: {}", respLangs.size(), respLangs);
         return new PageImpl<>(respLangs);
@@ -63,16 +62,8 @@ public class LanguageController {
             log.info("a language with id {} is not found", id);
             throw new LanguageNotFoundException(id);
         }
-        var respLang = convertLangToDto(dbLang.get());
+        var respLang = new LanguageDTO(dbLang.get());
         log.info("the language with id {} is: {}", id, respLang);
         return respLang;
-    }
-
-    private static final LanguageDTO convertLangToDto(Language lang) {
-        return LanguageDTO.builder()
-                .setId(lang.getId())
-                .setCode(lang.getCode())
-                .setName(lang.getName())
-                .build();
     }
 }
