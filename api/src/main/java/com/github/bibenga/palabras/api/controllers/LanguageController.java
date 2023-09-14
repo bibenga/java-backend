@@ -57,12 +57,8 @@ public class LanguageController {
     @ResponseBody
     public LanguageDTO getOne(@PathVariable int id, Principal principal) throws LanguageNotFoundException {
         log.info("try find a language with id: {}", id);
-        var dbLang = languageRepository.findById((byte) id);
-        if (!dbLang.isPresent()) {
-            log.info("a language with id {} is not found", id);
-            throw new LanguageNotFoundException(id);
-        }
-        var respLang = new LanguageDTO(dbLang.get());
+        var dbLang = languageRepository.findById((byte) id).orElseThrow(() -> new LanguageNotFoundException(id));
+        var respLang = new LanguageDTO(dbLang);
         log.info("the language with id {} is: {}", id, respLang);
         return respLang;
     }
