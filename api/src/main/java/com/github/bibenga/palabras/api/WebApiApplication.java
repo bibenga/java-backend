@@ -19,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
@@ -28,7 +28,6 @@ import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 
 @SpringBootApplication
-// @EnableWebMvc
 // @EnableAsync
 // @EnableScheduling
 // @EnableCaching
@@ -36,6 +35,7 @@ import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 @EnableJpaRepositories(basePackages = { "com.github.bibenga.palabras.repositories" })
 @EnableJpaAuditing
 @ComponentScan({ "com.github.bibenga.palabras.api.controllers" })
+@EnableWebMvc
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @SecuritySchemes({
@@ -59,16 +59,15 @@ public class WebApiApplication {
     @Profile("!jpa-test")
     public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector)
             throws Exception {
-        MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector).servletPath("/");
+        // MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector).servletPath("/");
         http.authorizeHttpRequests(requests -> requests
-                // .requestMatchers("/swagger-ui.html", "/swagger-ui/**",
-                // "/v3/api-docs/**").permitAll()
+                // .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 // .requestMatchers("/api/v1/management/status").permitAll()
                 // .requestMatchers("/api/v1/applications").permitAll()
                 // .requestMatchers("/api/v1/subscriptions").hasRole("ADMIN")
                 // .requestMatchers("/api").authenticated()
                 // .requestMatchers("/api").permitAll()
-                .requestMatchers(mvcMatcherBuilder.pattern("/admin/**")).hasRole("ADMIN")
+                // .requestMatchers(mvcMatcherBuilder.pattern("/admin/**")).hasRole("ADMIN")
                 .anyRequest().permitAll());
         http.formLogin(form -> form.permitAll());
         http.logout(logout -> logout.permitAll());

@@ -24,10 +24,14 @@ import java.security.Principal;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping(path = "/api/v1/language")
+@RequestMapping(path = "/api/v1/language", produces = MediaType.APPLICATION_JSON_VALUE)
 @Validated
 @Log4j2
 @Transactional(readOnly = true)
+// @SecurityRequirements(value = {
+// // @SecurityRequirement(name = "token"),
+// @SecurityRequirement(name = "basic")
+// })
 public class LanguageController {
 
     @Autowired
@@ -41,9 +45,10 @@ public class LanguageController {
                 .body(detail);
     }
 
-    @GetMapping(produces = { "application/json" })
+    @GetMapping()
     @ResponseBody
     public Page<LanguageDTO> getLanguages(Principal principal) {
+        log.info("user is {}", principal == null ? "anonymous" : principal.getName());
         var dbLangs = languageRepository.findAll();
         var respLangs = new ArrayList<LanguageDTO>(dbLangs.size());
         for (var dbLang : dbLangs) {
@@ -53,9 +58,11 @@ public class LanguageController {
         return new PageImpl<>(respLangs);
     }
 
-    @GetMapping(path = "/{id}", produces = { "application/json" })
+    @GetMapping("/{id}")
     @ResponseBody
+    // @PreAuthorize("isAuthenticated()")
     public LanguageDTO getOne(@PathVariable int id, Principal principal) throws LanguageNotFoundException {
+        log.info("user is {}", principal == null ? "anonymous" : principal.getName());
         log.info("try find a language with id: {}", id);
         var dbLang = languageRepository.findById((byte) id).orElseThrow(() -> new LanguageNotFoundException(id));
         var respLang = new LanguageDTO(dbLang);
