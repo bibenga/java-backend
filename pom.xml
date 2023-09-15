@@ -28,6 +28,7 @@
         <module>services</module>
         <module>loader</module>
         <module>api</module>
+        <module>firebase</module>
     </modules>
 
     <!-- Add typical dependencies for a web application -->

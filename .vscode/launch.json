@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "FireBaseAdminApplication",
+            "request": "launch",
+            "mainClass": "com.github.bibenga.palabras.firebase.FireBaseAdminApplication",
+            "projectName": "firebase"
+        },
+        {
+            "type": "java",
             "name": "WebApiApplication",
             "request": "launch",
             "mainClass": "com.github.bibenga.palabras.api.WebApiApplication",
