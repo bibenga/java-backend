@@ -9,4 +9,6 @@ import com.github.bibenga.palabras.entities.Language;
 @Repository
 public interface LanguageRepository extends JpaRepository<Language, Byte>, JpaSpecificationExecutor<Language> {
     Language findOneByCode(String code);
+
+    boolean existsByCode(String code);
 }

@@ -18,28 +18,28 @@ public class LanguageServiceImpl implements LanguageService {
 
     public void addDefaultLanguages() {
         log.info("adds default languages if they is not already defined");
-        var en = languageRepository.findOneByCode("en");
-        if (en == null) {
-            log.info("the english language is added");
-            languageRepository.save(Language.builder()
-                    .setId((byte) 1)
-                    .setCode("en")
-                    .setName("English")
-                    .build());
-        } else {
-            log.info("the english language have been already added");
-        }
 
-        var es = languageRepository.findOneByCode("es");
-        if (es == null) {
-            log.info("the español language is added");
-            languageRepository.save(Language.builder()
-                    .setId((byte) 2)
-                    .setCode("es")
-                    .setName("Español")
-                    .build());
+        insertIfNotExists(Language.builder()
+                .setId((byte) 1)
+                .setCode("en")
+                .setName("English")
+                .build());
+
+        insertIfNotExists(Language.builder()
+                .setId((byte) 2)
+                .setCode("es")
+                .setName("Español")
+                .build());
+    }
+
+    public void insertIfNotExists(Language lang) {
+        var exists = languageRepository.existsByCode(lang.getCode());
+        log.info("does the {} language exist? -> {}", lang.getName(), exists);
+        if (!exists) {
+            log.info("the {} language is added", lang.getName());
+            languageRepository.save(lang);
         } else {
-            log.info("the español language have been already added");
+            log.info("the {} language have been already added", lang.getName());
         }
     }
 }

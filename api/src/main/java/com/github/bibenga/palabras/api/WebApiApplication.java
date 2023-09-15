@@ -8,8 +8,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -29,19 +27,17 @@ import io.swagger.v3.oas.annotations.security.SecuritySchemes;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 
-import org.springframework.cache.annotation.EnableCaching;
-
 @SpringBootApplication
 // @EnableWebMvc
-@EnableWebSecurity
-@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
-@EnableAsync
-@EnableScheduling
+// @EnableAsync
+// @EnableScheduling
+// @EnableCaching
 @EntityScan({ "com.github.bibenga.palabras.entities" })
 @EnableJpaRepositories(basePackages = { "com.github.bibenga.palabras.repositories" })
-@ComponentScan({ "com.github.bibenga.palabras.api.controllers" })
 @EnableJpaAuditing
-@EnableCaching
+@ComponentScan({ "com.github.bibenga.palabras.api.controllers" })
+@EnableWebSecurity
+@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @SecuritySchemes({
         // @SecurityScheme(name = "session", type = SecuritySchemeType.DEFAULT),
         @SecurityScheme(name = "basic", type = SecuritySchemeType.HTTP, scheme = "basic"),
