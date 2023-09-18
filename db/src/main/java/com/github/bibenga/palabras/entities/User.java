@@ -22,7 +22,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
@@ -30,7 +29,7 @@ import lombok.ToString;
 @Builder(setterPrefix = "set", toBuilder = true)
 @Entity
 @Table(name = "user0", uniqueConstraints = {
-        @UniqueConstraint(name = "u_application_username", columnNames = { "username" }),
+        @UniqueConstraint(name = "u_application_external_id", columnNames = { "external_id" }),
 })
 @DynamicInsert
 @DynamicUpdate
@@ -41,13 +40,15 @@ public class User implements Serializable {
     @Column
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "external_id", nullable = false, unique = true)
     @NotNull
-    private String username;
+    private String externalId;
 
     @Column
-    @ToString.Exclude
-    private String password;
+    private String role;
+
+    @Column
+    private String email;
 
     @Column(name = "is_enabled_flg")
     @ColumnDefault("true")
