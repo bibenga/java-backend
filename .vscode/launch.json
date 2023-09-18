@@ -6,9 +6,9 @@
     "configurations": [
         {
             "type": "java",
-            "name": "FireBaseAdminApplication",
+            "name": "FirebaseAdminApplication",
             "request": "launch",
-            "mainClass": "com.github.bibenga.palabras.firebase.FireBaseAdminApplication",
+            "mainClass": "com.github.bibenga.palabras.firebase.FirebaseAdminApplication",
             "projectName": "firebase"
         },
         {
