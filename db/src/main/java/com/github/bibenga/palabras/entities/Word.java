@@ -51,7 +51,7 @@ public class Word implements Serializable {
     @NotNull
     private Language language;
 
-    @Column(name="value", nullable = false)
+    @Column(name="text1", nullable = false)
     @NotNull
     private String text;
 
