@@ -28,7 +28,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Builder(setterPrefix = "set", toBuilder = true)
 @Entity
-@Table(name = "local_user", uniqueConstraints = {
+@Table(name = "\"user\"", uniqueConstraints = {
         @UniqueConstraint(name = "u_application_external_id", columnNames = { "external_id" }),
 })
 @DynamicInsert
@@ -40,7 +40,7 @@ public class User implements Serializable {
     @Column
     private Long id;
 
-    @Column(name = "external_id", nullable = false, unique = true)
+    @Column(name = "external_id")
     @NotNull
     private String externalId;
 
@@ -60,11 +60,11 @@ public class User implements Serializable {
     @ColumnDefault("true")
     private boolean enabled;
 
-    @Column(name = "created_ts", nullable = false, updatable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Column(name = "created_ts", nullable = false, updatable = false, columnDefinition = "timestamp with time zone")
     @CreationTimestamp
     private ZonedDateTime created;
 
-    @Column(name = "modified_ts", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Column(name = "modified_ts", nullable = false, columnDefinition = "timestamp with time zone")
     @UpdateTimestamp
     private ZonedDateTime modified;
 }

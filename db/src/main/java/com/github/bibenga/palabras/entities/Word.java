@@ -44,22 +44,20 @@ public class Word implements Serializable {
     @NotNull
     private TextPair textPair;
 
-    private Long position;
-
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_word_language"))
     @NotNull
     private Language language;
 
-    @Column(name="text1", nullable = false)
+    @Column(name="\"text\"", nullable = false)
     @NotNull
     private String text;
 
-    @Column(name = "created_ts", nullable = false, updatable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Column(name = "created_ts", nullable = false, updatable = false, columnDefinition = "timestamp with time zone")
     @CreationTimestamp
     private ZonedDateTime created;
 
-    @Column(name = "modified_ts", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Column(name = "modified_ts", nullable = false, columnDefinition = "timestamp with time zone")
     @UpdateTimestamp
     private ZonedDateTime modified;
 }
