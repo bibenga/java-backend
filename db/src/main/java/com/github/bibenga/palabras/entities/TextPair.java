@@ -49,17 +49,11 @@ public class TextPair implements Serializable {
 
     @Column(nullable = false)
     @NotNull
-    private String test1;
+    private String text1;
 
     @Column(nullable = false)
     @NotNull
     private String text2;
-
-    @JdbcTypeCode(SqlTypes.JSON)
-    private List<String> test1a;
-
-    @JdbcTypeCode(SqlTypes.JSON)
-    private List<String> test2a;
 
     @Column(name = "created_ts", nullable = false, updatable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
     @CreationTimestamp

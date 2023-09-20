@@ -9,4 +9,5 @@ import com.github.bibenga.palabras.entities.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
     User findOneByExternalId(String externalId);
+    User findOneByUsername(String username);
 }
