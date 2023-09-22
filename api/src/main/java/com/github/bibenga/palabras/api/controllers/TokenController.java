@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.log4j.Log4j2;
@@ -34,7 +35,7 @@ public class TokenController {
     @GetMapping
     @ResponseBody
     public Map<String, Object> getOne(
-            @RequestParam(name = "user") @NotNull @NotBlank String user,
+            @RequestParam(name = "user") @NotNull @NotBlank @Email String user,
             @RequestParam(name = "password") @NotNull @NotBlank String password) {
         log.info("try obtain token for {}", user);
 
@@ -42,14 +43,13 @@ public class TokenController {
                 "email", user,
                 "password", password,
                 "returnSecureToken", true);
-        var request = new HttpEntity<>(params);
 
         var uri = UriComponentsBuilder.fromUriString(tokenUriTemplate).build();
         uri = uri.expand(Map.of("key", this.apiKey));
         var url = uri.toString();
 
         var api = new RestTemplate();
-        Map<String, Object> res = api.postForObject(url, request, Map.class);
+        Map<String, Object> res = api.postForObject(url, params, Map.class);
         return res;
     }
 }

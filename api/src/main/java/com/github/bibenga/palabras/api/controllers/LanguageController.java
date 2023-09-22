@@ -67,8 +67,8 @@ public class LanguageController {
     // @PreAuthorize("isAuthenticated()")
     @PreAuthorize("hasAuthority('USER')")
     public LanguageDTO getOne(@PathVariable int id, Principal principal) throws LanguageNotFoundException {
-        log.info("principal: {}", principal);
-        log.info("user: {}", principal == null ? "anonymous" : principal.getName());
+        log.info("principal: {} -> {}", principal == null ? null : principal.getClass(), principal);
+        log.info("user id is '{}'", principal == null ? "anonymous" : principal.getName());
 
         log.info("try find a language with id: {}", id);
         var dbLang = languageRepository.findById((byte) id).orElseThrow(() -> new LanguageNotFoundException(id));

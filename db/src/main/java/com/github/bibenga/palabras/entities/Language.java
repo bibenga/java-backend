@@ -14,6 +14,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -34,14 +35,17 @@ import lombok.NoArgsConstructor;
 @Cacheable
 public class Language implements Serializable {
     @Id
+    @NotNull
     private Byte id;
 
     @Column(nullable = false)
     @NotNull
+    @NotBlank
     private String code;
 
     @Column(nullable = false)
     @NotNull
+    @NotBlank
     private String name;
 
     @Column(name = "created_ts", nullable = false, updatable = false, columnDefinition = "timestamp with time zone")

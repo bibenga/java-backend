@@ -42,8 +42,10 @@ import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @SecuritySchemes({
         @SecurityScheme(name = "firestore", type = SecuritySchemeType.HTTP, bearerFormat = "JWT", scheme = "bearer"),
-// @SecurityScheme(name = "basic", type = SecuritySchemeType.HTTP, scheme = "basic"),
-// @SecurityScheme(name = "token", type = SecuritySchemeType.APIKEY, in = SecuritySchemeIn.HEADER, paramName = "X-Token", scheme = "token"),
+// @SecurityScheme(name = "basic", type = SecuritySchemeType.HTTP, scheme =
+// "basic"),
+// @SecurityScheme(name = "token", type = SecuritySchemeType.APIKEY, in =
+// SecuritySchemeIn.HEADER, paramName = "X-Token", scheme = "token"),
 })
 @Log4j2
 public class WebApiApplication {
@@ -113,27 +115,12 @@ public class WebApiApplication {
 
     // @Bean
     // public AuthenticationEventPublisher authenticationEventPublisher(
-    //         ApplicationEventPublisher applicationEventPublisher) {
-    //     return new DefaultAuthenticationEventPublisher(applicationEventPublisher);
+    // ApplicationEventPublisher applicationEventPublisher) {
+    // return new DefaultAuthenticationEventPublisher(applicationEventPublisher);
     // }
 
     @EventListener
     public void onSuccess(AuthenticationSuccessEvent success) {
         log.info("onSuccess -> {}", success);
     }
-
-    // @Bean
-    // public UserDetailsService userDetailsService() {
-    // PasswordEncoder encoder =
-    // PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    // var admin = User.withUsername("a")
-    // .password(encoder.encode("a"))
-    // .roles("ADMIN")
-    // .build();
-    // var user = User.withUsername("u")
-    // .password(encoder.encode("u"))
-    // .roles("USER")
-    // .build();
-    // return new InMemoryUserDetailsManager(admin, user);
-    // }
 }

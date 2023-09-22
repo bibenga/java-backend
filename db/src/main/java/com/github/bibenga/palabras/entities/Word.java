@@ -18,6 +18,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -51,6 +52,7 @@ public class Word implements Serializable {
 
     @Column(name="\"text\"", nullable = false)
     @NotNull
+    @NotBlank
     private String text;
 
     @Column(name = "created_ts", nullable = false, updatable = false, columnDefinition = "timestamp with time zone")
