@@ -2,13 +2,10 @@ package com.github.bibenga.palabras.entities;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import jakarta.persistence.Cacheable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -32,7 +29,7 @@ import lombok.NoArgsConstructor;
 })
 @DynamicInsert
 @DynamicUpdate
-@Cacheable
+// @EntityListeners(AuditingEntityListener.class)
 public class Language implements Serializable {
     @Id
     @NotNull
@@ -50,9 +47,12 @@ public class Language implements Serializable {
 
     @Column(name = "created_ts", nullable = false, updatable = false, columnDefinition = "timestamp with time zone")
     @CreationTimestamp
+    // @CreatedDate
     private ZonedDateTime created;
 
     @Column(name = "modified_ts", nullable = false, columnDefinition = "timestamp with time zone")
     @UpdateTimestamp
+    // @Version
+    // @LastModifiedDate
     private ZonedDateTime modified;
 }

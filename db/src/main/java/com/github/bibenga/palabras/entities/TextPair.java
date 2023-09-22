@@ -2,16 +2,10 @@ package com.github.bibenga.palabras.entities;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.List;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.type.SqlTypes;
-
-import jakarta.persistence.Cacheable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,7 +30,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Cacheable
 public class TextPair implements Serializable {
     @Id
     @GeneratedValue

@@ -3,7 +3,6 @@ package com.github.bibenga.palabras.api;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -23,7 +22,6 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
-
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.security.SecuritySchemes;
 import lombok.extern.log4j.Log4j2;
@@ -36,6 +34,7 @@ import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 @EntityScan({ "com.github.bibenga.palabras.entities" })
 @EnableJpaRepositories(basePackages = { "com.github.bibenga.palabras.repositories" })
 @EnableJpaAuditing
+// @EnableTransactionManagement
 @ComponentScan({ "com.github.bibenga.palabras.api.controllers" })
 @EnableWebMvc
 @EnableWebSecurity
