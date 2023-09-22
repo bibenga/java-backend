@@ -35,19 +35,17 @@ public class TokenController {
     @GetMapping
     @ResponseBody
     public Map<String, Object> getOne(
-            @RequestParam(name = "user") @NotNull @NotBlank @Email String user,
+            @RequestParam(name = "email") @NotNull @NotBlank @Email String email,
             @RequestParam(name = "password") @NotNull @NotBlank String password) {
-        log.info("try obtain token for {}", user);
-
-        var params = Map.of(
-                "email", user,
-                "password", password,
-                "returnSecureToken", true);
+        log.info("try obtain token for {}", email);
 
         var uri = UriComponentsBuilder.fromUriString(tokenUriTemplate).build();
         uri = uri.expand(Map.of("key", this.apiKey));
         var url = uri.toString();
-
+        var params = Map.of(
+                "email", email,
+                "password", password,
+                "returnSecureToken", true);
         var api = new RestTemplate();
         Map<String, Object> res = api.postForObject(url, params, Map.class);
         return res;
