@@ -9,7 +9,7 @@ import org.springframework.test.context.TestPropertySource;
 
 import com.github.bibenga.palabras.entities.Language;
 
-@DataJpaTest(showSql = false)
+@DataJpaTest
 // @ContextConfiguration(classes=TestConfiguration.class)
 @TestPropertySource(locations = { "classpath:application-test.properties" })
 public class LanguageRepositoryTest {
@@ -20,12 +20,13 @@ public class LanguageRepositoryTest {
     @Test
     void testSave() {
         // test for "play" with test
+        assertEquals(languageRepository.count(), 0);
         var lang = Language.builder()
-                .setId((byte) 1)
+                .setId((byte) -1)
                 .setCode("en")
                 .setName("English")
                 .build();
         languageRepository.save(lang);
-        assertEquals(languageRepository.count(), 1L);
+        assertEquals(languageRepository.count(), 1);
     }
 }
