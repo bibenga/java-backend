@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.github.bibenga.palabras.entities.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
+public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User>, UserRepositoryExt {
     User findOneByExternalId(String externalId);
     User findOneByUsername(String username);
 }

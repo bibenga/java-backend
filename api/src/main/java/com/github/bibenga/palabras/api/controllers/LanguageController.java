@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.bibenga.palabras.repositories.LanguageRepository;
-
 import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.log4j.Log4j2;
@@ -58,6 +57,7 @@ public class LanguageController {
             respLangs.add(new LanguageDTO(dbLang));
         }
         log.info("find {} langs: {}", respLangs.size(), respLangs);
+
         return new PageImpl<>(respLangs);
     }
 
