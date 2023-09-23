@@ -34,12 +34,12 @@ public class LanguageServiceImpl implements LanguageService {
 
     public void insertIfNotExists(Language lang) {
         var exists = languageRepository.existsByCode(lang.getCode());
-        log.info("does the {} language exist? -> {}", lang.getName(), exists);
+        log.info("does the '{}' language exist? -> {}", lang.getName(), exists);
         if (!exists) {
-            log.info("the {} language is added", lang.getName());
+            log.info("the '{}' language is added", lang.getName());
             languageRepository.save(lang);
         } else {
-            log.info("the {} language have been already added", lang.getName());
+            log.info("the '{}' language have been already added", lang.getName());
         }
     }
 }

@@ -103,8 +103,8 @@ public class WebApiApplication {
 
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
-        converter
-                .setJwtGrantedAuthoritiesConverter(jwt -> Optional.ofNullable(jwt.getClaimAsStringList("role"))
+        converter.setJwtGrantedAuthoritiesConverter(
+                jwt -> Optional.ofNullable(jwt.getClaimAsStringList("role"))
                         .stream()
                         .flatMap(Collection::stream)
                         .map(SimpleGrantedAuthority::new)
