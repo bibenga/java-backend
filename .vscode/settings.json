@@ -8,5 +8,6 @@
         ]
     },
     "java.project.explorer.showNonJavaResources": false,
-    "editor.inlayHints.enabled": "off"
+    "editor.inlayHints.enabled": "off",
+    "editor.formatOnSave": true
 }
