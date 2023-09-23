@@ -6,12 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.ContextConfiguration;
 
 import jakarta.persistence.EntityManager;
 
 @DataJpaTest
-@TestPropertySource(locations = { "classpath:application-test.properties" })
+@ContextConfiguration(classes = TestConfiguration.class)
 public class UserRepositoryTest {
 
     @Autowired
@@ -21,10 +21,10 @@ public class UserRepositoryTest {
     private EntityManager entityManager;
 
     @Test
-    void testGetOrCreateOrUpdate() {
+    void testFindOrCreateOrUpdate() {
         var externalId = "123";
         assertEquals(userRepository.count(), 0);
-        var user = userRepository.getOrCreateOrUpdate(externalId);
+        var user = userRepository.findOrCreateOrUpdate(externalId);
         assertNotNull(user);
         assertEquals(userRepository.count(), 1);
         entityManager.clear(); // clear cache for load new instance of object

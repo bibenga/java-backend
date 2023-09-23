@@ -20,7 +20,7 @@ public class UserRepositoryExtImpl implements UserRepositoryExt {
 
     @Override
     @Transactional
-    public User getOrCreateOrUpdate(String externalId) {
+    public User findOrCreateOrUpdate(String externalId) {
         log.info("get or create or update user: {}", externalId);
         var criteriaBuilder = entityManager.getCriteriaBuilder();
         var query = criteriaBuilder.createQuery(User.class);
