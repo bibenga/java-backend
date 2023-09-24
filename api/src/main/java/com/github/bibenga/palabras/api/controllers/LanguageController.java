@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,12 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.github.bibenga.palabras.repositories.LanguageRepository;
-import io.swagger.v3.oas.annotations.security.SecurityRequirements;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.log4j.Log4j2;
-
 import java.security.Principal;
 import java.util.ArrayList;
 
@@ -30,10 +25,6 @@ import java.util.ArrayList;
 @Validated
 @Log4j2
 @Transactional(readOnly = true)
-// @SecurityRequirements(value = {
-// // @SecurityRequirement(name = "token"),
-// @SecurityRequirement(name = "basic")
-// })
 public class LanguageController {
 
     @Autowired
@@ -57,19 +48,12 @@ public class LanguageController {
             respLangs.add(new LanguageDTO(dbLang));
         }
         log.info("find {} langs: {}", respLangs.size(), respLangs);
-
         return new PageImpl<>(respLangs);
     }
 
     @GetMapping("/{id}")
     @ResponseBody
-    @SecurityRequirements(value = @SecurityRequirement(name = "firestore"))
-    // @PreAuthorize("isAuthenticated()")
-    @PreAuthorize("hasAuthority('USER')")
-    public LanguageDTO getOne(@PathVariable int id, Principal principal) throws LanguageNotFoundException {
-        log.info("principal: {} -> {}", principal == null ? null : principal.getClass(), principal);
-        log.info("user id is '{}'", principal == null ? "anonymous" : principal.getName());
-
+    public LanguageDTO getOne(@PathVariable int id) throws LanguageNotFoundException {
         log.info("try find a language with id: {}", id);
         var dbLang = languageRepository.findById((byte) id).orElseThrow(() -> new LanguageNotFoundException(id));
         var respLang = new LanguageDTO(dbLang);
