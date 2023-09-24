@@ -14,8 +14,8 @@ import lombok.AccessLevel;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Builder
 public class UserDTO implements Serializable {
-    private Long id;
-
     @NotBlank
     private String uid;
+
+    private boolean authenticated;
 }

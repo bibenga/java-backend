@@ -21,16 +21,25 @@ import java.security.Principal;
 @Log4j2
 @Transactional(readOnly = true)
 public class UserController {
+    @GetMapping("/current")
+    @ResponseBody
+    public UserDTO getUser(Principal principal) throws LanguageNotFoundException {
+        var userDto = UserDTO.builder()
+                .uid(principal == null ? null : principal.getName())
+                .authenticated(principal != null)
+                .build();
+        log.info("the user is: {}", userDto);
+        return userDto;
+    }
+
     @GetMapping
     @ResponseBody
-    // @PreAuthorize("isAuthenticated()")
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("isAuthenticated()")
+    // @PreAuthorize("hasAuthority('USER')")
     public UserDTO getCurrentUser(@NotNull Principal principal) throws LanguageNotFoundException {
-        log.info("principal: {} -> {}", principal == null ? null : principal.getClass(), principal);
-        log.info("user id is '{}'", principal == null ? "anonymous" : principal.getName());
-
         var userDto = UserDTO.builder()
                 .uid(principal.getName())
+                .authenticated(true)
                 .build();
         log.info("the user is: {}", userDto);
         return userDto;
