@@ -34,8 +34,8 @@ public class TokenController {
     @GetMapping
     @ResponseBody
     public Map<String, Object> getOne(
-            @RequestParam(name = "email") @NotNull @NotBlank @Email String email,
-            @RequestParam(name = "password") @NotNull @NotBlank String password) {
+            @RequestParam(name = "email", defaultValue = "olala-AE92ED63-7F80-4FD5-B875-5D72A9774510@gmail.com") @NotNull @NotBlank @Email String email,
+            @RequestParam(name = "password", defaultValue = "9B725739-9470-4237-8A75-0B2391BAA4C6") @NotNull @NotBlank String password) {
         log.info("try obtain token for {}", email);
 
         var uri = UriComponentsBuilder.fromUriString(tokenUriTemplate).build();
