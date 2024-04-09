@@ -6,20 +6,40 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Launch Current File",
+            "name": "FirebaseAdminApplication",
             "request": "launch",
-            "mainClass": "${file}"
+            "mainClass": "com.github.bibenga.palabras.firebase.FirebaseAdminApplication",
+            "projectName": "firebase"
         },
         {
             "type": "java",
-            "name": "TestApplication",
+            "name": "WebApiApplication",
             "request": "launch",
-            "mainClass": "com.mycompany.test2.TestApplication",
-            "projectName": "test2",
+            "mainClass": "com.github.bibenga.palabras.api.WebApiApplication",
+            "projectName": "api",
             "vmArgs": "-Xmx256M -XX:+UseSerialGC"
-// https://medium.com/swlh/jvm-startup-time-and-memory-footprint-enhancements-6b78bd74f182
-            // "vmArgs": "-Xmx512M -XX:+UseSerialGC -XX:DumpLoadedClassList=app-classes.txt"
-            // "vmArgs": "-Xmx512M -Xshare:dump -XX:SharedClassListFile=app-classes.txt -XX:SharedArchiveFile=app-classes.jsa"
+        },
+        {
+            "type": "java",
+            "name": "UIApplication",
+            "request": "launch",
+            "mainClass": "com.github.bibenga.palabras.ui.UIApplication",
+            "projectName": "ui",
+            "vmArgs": "-Xmx256M -XX:+UseSerialGC"
+        },
+        {
+            "type": "java",
+            "name": "LoadDataApplication",
+            "request": "launch",
+            "mainClass": "com.github.bibenga.palabras.loader.LoadDataApplication",
+            "projectName": "loader",
+            "vmArgs": "-Xmx256M -XX:+UseSerialGC"
+        },
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
         }
     ]
 }

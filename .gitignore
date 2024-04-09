@@ -28,3 +28,5 @@ replay_pid*
 target
 .db.mv.db
 .db.trace.db
+firebase.json
+application-secret.properties
