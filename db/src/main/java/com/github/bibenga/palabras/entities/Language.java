@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
@@ -48,11 +49,13 @@ public class Language implements Serializable {
     @Column(name = "created_ts", nullable = false, updatable = false, columnDefinition = "timestamp with time zone")
     @CreationTimestamp
     // @CreatedDate
+    @ToString.Exclude
     private ZonedDateTime created;
 
     @Column(name = "modified_ts", nullable = false, columnDefinition = "timestamp with time zone")
     @UpdateTimestamp
     // @Version
     // @LastModifiedDate
+    @ToString.Exclude
     private ZonedDateTime modified;
 }
