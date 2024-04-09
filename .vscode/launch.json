@@ -21,6 +21,14 @@
         },
         {
             "type": "java",
+            "name": "UIApplication",
+            "request": "launch",
+            "mainClass": "com.github.bibenga.palabras.ui.UIApplication",
+            "projectName": "ui",
+            "vmArgs": "-Xmx256M -XX:+UseSerialGC"
+        },
+        {
+            "type": "java",
             "name": "LoadDataApplication",
             "request": "launch",
             "mainClass": "com.github.bibenga.palabras.loader.LoadDataApplication",
