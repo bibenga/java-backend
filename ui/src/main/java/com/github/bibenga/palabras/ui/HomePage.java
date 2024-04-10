@@ -2,13 +2,19 @@ package com.github.bibenga.palabras.ui;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
-import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.protocol.http.WebSession;
+import org.apache.wicket.protocol.ws.api.WebSocketRequestHandler;
+import org.apache.wicket.protocol.ws.api.message.AbortedMessage;
+import org.apache.wicket.protocol.ws.api.message.ClosedMessage;
+import org.apache.wicket.protocol.ws.api.message.ConnectedMessage;
+import org.apache.wicket.protocol.ws.api.message.ErrorMessage;
+import org.apache.wicket.protocol.ws.api.message.TextMessage;
+import org.apache.wicket.protocol.ws.api.WebSocketBehavior;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.wicketstuff.annotation.mount.MountPath;
@@ -27,9 +33,11 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome6C
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesome6IconType;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.OpenWebIconType;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.OpenWebIconsCssReference;
+import lombok.extern.log4j.Log4j2;
 
 @WicketHomePage
 @MountPath("home")
+@Log4j2
 public class HomePage extends WebPage {
     public HomePage(final PageParameters parameters) {
         super(parameters);
@@ -52,6 +60,34 @@ public class HomePage extends WebPage {
         // add(new Code("code-internal"));
 
         // add(new HeaderResponseContainer("footer-container", "footer-container"));
+
+        add(new WebSocketBehavior() {
+            @Override
+            protected void onMessage(WebSocketRequestHandler handler, TextMessage message) {
+                var msg = message.getText();
+                log.info("ws: {}", msg);
+            }
+
+            @Override
+            protected void onConnect(ConnectedMessage message) {
+                log.info("ws: connected");
+            }
+
+            @Override
+            protected void onClose(ClosedMessage message) {
+                log.info("ws: closed");
+            }
+
+            @Override
+            protected void onAbort(AbortedMessage message) {
+                log.info("ws: aborted");
+            }
+
+            @Override
+            protected void onError(WebSocketRequestHandler handler, ErrorMessage message) {
+                log.info("ws: failed");
+            }
+        });
     }
 
     private Component newNavbar(String componentId) {
