@@ -25,10 +25,15 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
+import org.springframework.web.socket.WebSocketHandler;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.security.SecuritySchemes;
+import jakarta.validation.constraints.NotNull;
 import lombok.extern.log4j.Log4j2;
 
 @SpringBootApplication
@@ -41,6 +46,7 @@ import lombok.extern.log4j.Log4j2;
 // @EnableTransactionManagement
 @ComponentScan({ "com.github.bibenga.palabras.api.controllers" })
 @EnableWebMvc
+@EnableWebSocket
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @SecuritySchemes({
@@ -51,7 +57,7 @@ import lombok.extern.log4j.Log4j2;
 // SecuritySchemeIn.HEADER, paramName = "X-Token", scheme = "token"),
 })
 @Log4j2
-public class WebApiApplication {
+public class WebApiApplication implements WebSocketConfigurer {
 
     public static void main(String[] args) {
         SpringApplication.run(WebApiApplication.class, args);
@@ -76,6 +82,7 @@ public class WebApiApplication {
                 // .requestMatchers("/api/v1/subscriptions").hasRole("ADMIN")
                 // .requestMatchers("/api").authenticated()
                 // .requestMatchers("/api").permitAll()
+                // .requestMatchers("/ws").permitAll()
                 // .requestMatchers(mvcMatcherBuilder.pattern("/admin/**")).hasRole("ADMIN")
                 .anyRequest().permitAll());
         http.formLogin(form -> form.permitAll());
@@ -125,5 +132,16 @@ public class WebApiApplication {
     @EventListener
     public void onSuccess(AuthenticationSuccessEvent success) {
         log.info("onSuccess -> {}", success);
+    }
+
+    @Override
+    public void registerWebSocketHandlers(@NotNull WebSocketHandlerRegistry registry) {
+        log.info("registerWebSocketHandlers");
+        registry.addHandler(wsHandler(), "/ws");
+    }
+
+    @Bean
+    public WebSocketHandler wsHandler() {
+        return new WSHandler();
     }
 }
