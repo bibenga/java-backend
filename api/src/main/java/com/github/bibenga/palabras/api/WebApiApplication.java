@@ -12,15 +12,19 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.messaging.Message;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
+import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.socket.EnableWebSocketSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
+import org.springframework.security.messaging.access.intercept.MessageMatcherDelegatingAuthorizationManager;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -29,11 +33,11 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.security.SecuritySchemes;
-import jakarta.validation.constraints.NotNull;
 import lombok.extern.log4j.Log4j2;
 
 @SpringBootApplication
@@ -48,6 +52,7 @@ import lombok.extern.log4j.Log4j2;
 @EnableWebMvc
 @EnableWebSocket
 @EnableWebSecurity
+@EnableWebSocketSecurity
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @SecuritySchemes({
         @SecurityScheme(name = "firestore", type = SecuritySchemeType.HTTP, bearerFormat = "JWT", scheme = "bearer"),
@@ -108,6 +113,13 @@ public class WebApiApplication implements WebSocketConfigurer {
     }
 
     @Bean
+    AuthorizationManager<Message<?>> messageAuthorizationManager(
+            MessageMatcherDelegatingAuthorizationManager.Builder messages) {
+        messages.simpDestMatchers("/ws").permitAll();
+        return messages.build();
+    }
+
+    @Bean
     public SecurityEvaluationContextExtension securityEvaluationContextExtension() {
         return new SecurityEvaluationContextExtension();
     }
@@ -125,8 +137,8 @@ public class WebApiApplication implements WebSocketConfigurer {
 
     // @Bean
     // public AuthenticationEventPublisher authenticationEventPublisher(
-    // ApplicationEventPublisher applicationEventPublisher) {
-    // return new DefaultAuthenticationEventPublisher(applicationEventPublisher);
+    //         ApplicationEventPublisher applicationEventPublisher) {
+    //     return new DefaultAuthenticationEventPublisher(applicationEventPublisher);
     // }
 
     @EventListener
@@ -135,9 +147,10 @@ public class WebApiApplication implements WebSocketConfigurer {
     }
 
     @Override
-    public void registerWebSocketHandlers(@NotNull WebSocketHandlerRegistry registry) {
+    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         log.info("registerWebSocketHandlers");
-        registry.addHandler(wsHandler(), "/ws");
+        registry.addHandler(wsHandler(), "/ws").setAllowedOrigins("*")
+                .addInterceptors(new HttpSessionHandshakeInterceptor());
     }
 
     @Bean
